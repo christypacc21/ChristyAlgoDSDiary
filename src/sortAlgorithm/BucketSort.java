@@ -80,8 +80,9 @@ public class BucketSort {
 
 
     public static void main(String[] args) {
-//        int[] nums = new int[]{5,2,9,4,7,6,1,3,8,20,23,21,24};
-//        bucketSort(nums);
+        int[] nums = new int[]{5,2,9,4,7,6,1,3,8,20,23,21,24};
+        bucketSort(nums);
+        System.out.println("--------");
         int[] numsLC = new int[]{1,1,1,2,2};
         LC347(numsLC, 2);
     }

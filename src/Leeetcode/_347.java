@@ -57,12 +57,14 @@ public class _347 { //super important, Must 熟
      */
     // (Must 熟) M2 Bucket sort : time : O(n) space O(n)
     public static List<Integer> _2(int[] nums, int k) {
+        // Step1(HashMap) build a raw set of frequency statistics using datastructure HashMap {item:frequency, item:frequency, ...}
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int num : nums){
             map.put(num, map.getOrDefault(num, 0) + 1); // if no this record, create a record as key and 1 as value ; if has record, plus one to the value of the key.
         }
 
-        List<Integer>[] bucket = new List[nums.length + 1];
+        // Step2(Bucket sort) build a new set of frequency statistics using buckets (position implies frequency:[0,1,2,3,4...]) -> data:[null,[4],[2,3],[1],null...]
+        List<Integer>[] bucket = new List[nums.length + 1]; // the position 0 in bucket is not useful, so need to + 1 (16:10 in video)
         for (int num : map.keySet()){
             int freq = map.get(num);
             if (bucket[freq] == null){
@@ -70,7 +72,9 @@ public class _347 { //super important, Must 熟
             }
             bucket[freq].add(num);
         }
+        System.out.println(Arrays.toString(bucket));
 
+        // Step3(ArrayList as result) construct the result(an array) using the buckets' statistics
         List<Integer> res = new ArrayList<>();
         // if clarified with interviewer what k should return:
         // choice 1 -> return all items that satisfy k (eg k = 2, output is [1,2,3])
