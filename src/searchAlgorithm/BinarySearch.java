@@ -1,8 +1,8 @@
 package searchAlgorithm;
 
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
+
+//https://www.zhihu.com/question/36132386
 
 public class BinarySearch {
     //Lsn 5-2 递归写法 tO(logn) sO(logn)
@@ -24,17 +24,17 @@ public class BinarySearch {
 
     //Lsn 5-3 iteration 写法 I：left <= right
     // target valid 範圍(in while loop): right < target < left
-    // 結束條件: right + 1 = left
+    // 結束條件 (if ans is -1 (沒return/沒找到)): right + 1 = left
     public static int binarySearch1(int[] nums,  int target){
         int left = 0;
         int right = nums.length - 1; //[left, right]
-        while (left <= right) {
+        while (left <= right) { //if 沒找到，last round will be left = right (left > right 不執行)
             int mid = (right - left)/2 + left;
             if (target < nums[mid]){ // [left, mid - 1]
                 right = mid - 1;
             } else if (target > nums[mid]){ // [mid + 1, right]
                 left = mid + 1;
-            } else { // nums[mid] == target
+            } else if (target == nums[mid]){
                 return mid;
             }
             System.out.println("mid: " + nums[mid] + " left: " + nums[left] + " right: " + nums[right]);
@@ -45,7 +45,7 @@ public class BinarySearch {
 
     //Lsn 5-4 iteration 写法 II : left < right
     // target valid 範圍(in while loop): target < left = right
-    // 結束條件: left = right
+    // 結束條件 (if ans is -1(沒return/沒找到)): left = right
     public static int binarySearch2(int[] nums,  int target){
         int left = 0;
         int right = nums.length; //[left, right)
@@ -55,7 +55,7 @@ public class BinarySearch {
                 right = mid;
             } else if (nums[mid] < target){ // [mid + 1, right）
                 left = mid + 1;
-            } else {
+            } else if (nums[mid] == target){
                 return mid;
             }
             System.out.println("mid: " + nums[mid] + " left: " + nums[left] + " right index: " + right);
@@ -66,7 +66,7 @@ public class BinarySearch {
 
     //Lsn 5-5 iteration 写法 III : left + 1 < right
     // target valid 範圍(in while loop): left < target < right
-    // 結束條件: left + 1 = right (當 left right 雙鄰)
+    // 結束條件 (if ans is -1(沒return/沒找到)): left + 1 = right (當 left right 雙鄰)
     public static int binarySearch3(int[] nums,  int target){
         int left = 0;
         int right = nums.length - 1;
@@ -94,6 +94,6 @@ public class BinarySearch {
     public static void main(String[] args) {
         int[] nums = new int[]{1,3,5,9,10};
         System.out.println(Arrays.toString(nums) + " target: 6");
-        System.out.println(binarySearch3(nums, 6));
+        System.out.println(binarySearch1(nums, 1));
     }
 }
