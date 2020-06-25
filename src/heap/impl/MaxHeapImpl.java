@@ -12,12 +12,19 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E>{
         this.data = data;
         this.size = data.length;
         this.data = data;
+        heapify(data); //heapify
     }
 
     public MaxHeapImpl() {
         this.capacity = 16;
         this.size = 0;
         this.data = (E[]) new Comparable[capacity];
+    }
+
+    public void heapify(E[] data){ //heapify
+        for (int i = getParentIndex(size - 1); i >= 0; i--){
+            siftDownHeapify(i);
+        }
     }
 
     @Override
@@ -79,8 +86,8 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E>{
 
     }
 
-    private int getParentIndex(int childIndex){
-        return (childIndex - 1) / 2; //? why -1
+    private int getParentIndex(int childIndex){ // note that the childIndex here starts from 0 not 1
+        return (childIndex - 1) / 2; //? why -1? anyway it works. // Ting: ho chi if start from 1, can childIndex/2 - 1
     }
     private int getLeftChildIndex(int parentIndex){
         return 2 * parentIndex + 1;
@@ -115,8 +122,26 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E>{
         }
     }
 
+    // becareful of node position in array VS node's value
     private void siftDown(){ // scene: delete ndoe (remove top node), now the last node is moved to be as the top node, so index = 0;
         int index = 0;
+        while (getLeftChildIndex(index) < size){ // have left child
+            // get the biggest value of child node. (to compare with current node. current node smaller, swap, and keep while loop. if not, means current node is at the right position, stop while (finished)).
+            int biggerChildIndex = getLeftChildIndex(index);
+            if (getRightChildIndex(index) < size && rightChild(index).compareTo(leftChild(index)) > 0){ // have right child and right > left
+                biggerChildIndex = getRightChildIndex(index);
+            }
+            if (data[index].compareTo(data[biggerChildIndex]) > 0){ // if current index > bigger child index, stop, dun needa keep going
+                break;
+            } else {
+                swap(index, biggerChildIndex);
+            }
+            index = biggerChildIndex;
+        }
+    }
+
+    //heapify
+    private void siftDownHeapify(int index){ // scene: delete node (remove top node), now the last node is moved to be as the top node, so index = 0;
         while (getLeftChildIndex(index) < size){ // have left child
             // get the biggest value of child node. (to compare with current node. current node smaller, swap, and keep while loop. if not, means current node is at the right position, stop while (finished)).
             int biggerChildIndex = getLeftChildIndex(index);
