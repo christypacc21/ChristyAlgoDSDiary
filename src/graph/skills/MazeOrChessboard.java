@@ -74,7 +74,7 @@ import java.util.Queue;
 //
 
 
-public class MazeOrChessboard {  // followup 3 最短距離
+public class MazeOrChessboard {  // followup 3 最短距離 (whenever find 最短距離, use BFS M2分層 (see BFS.java))
     private int hasPath(int[][] maze, int[] start, int[] end) { // followup 3 最短距離
         int[][] directions = new int[][]{{1,0}, {-1,0},{0,1},{0,-1}}; //direction：右左下上
 
@@ -87,16 +87,16 @@ public class MazeOrChessboard {  // followup 3 最短距離
         visited[start[0]][start[1]] = true;
 
         while (!queue.isEmpty()){
-            res ++;
+            res ++; // we make a forloop below to 分層, and to put res++ here instead of inside the forloop below, is becoz +1layer 才是 res+1 的條件, not +1item in the queue.
             int size = queue.size();
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) { // 分層(BFS M2 (see BFS.java)), separate handling of items layer by layer (層次劃分) (use queue.size to find 最短距離(each layer is 1 step)(?))
                 Point cur = queue.poll();
                 if (cur.x == end[0] && cur.y == end[1]){ // if item reached, means hv path, return true then
                     //print out see see
                     for (boolean[] visit : visited){
                         System.out.println(Arrays.toString(visit));
                     }
-                    return res - 1;
+                    return res - 1; // -1 here is coz we r finding num or steps instead of num of items
                 }
                 for (int[] direction : directions) {
                     int newX = cur.x + direction[0];
