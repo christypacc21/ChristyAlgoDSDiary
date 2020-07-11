@@ -9,6 +9,6 @@ public class GraphNode {
 
     public GraphNode(int label){
         this.label = label;
-        neighbors = new ArrayList<>();
+        this.neighbors = new ArrayList<>();
     }
 }
