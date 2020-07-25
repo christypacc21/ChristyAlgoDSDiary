@@ -27,5 +27,6 @@ public class _502 {
 
     public static void main(String[] args) {
         System.out.println(findMaximizedCapital(2,0, new int[]{1,2,3}, new int[]{0,1,1}));
+//        System.out.println(findMaximizedCapital(2,0, new int[]{1,0,0,10}, new int[]{0,1,1}));
     }
 }
